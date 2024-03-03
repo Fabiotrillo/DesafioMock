@@ -14,7 +14,7 @@ class CartRepository {
         const cart = await this.dao.getCartByID(cartId);
         return cart;
       } catch (error) {
-        throw new Error(`Error al obtener el carrito: ${error.message}`);
+        throw new Error;
       }
     }
   
@@ -23,7 +23,7 @@ class CartRepository {
         const cart = await this.dao.createCarts({ products, quantity });
         return cart;
       } catch (error) {
-        throw new Error(`Error al crear el carrito: ${error.message}`);
+        throw new Error;
       }
     }
 
@@ -44,7 +44,7 @@ class CartRepository {
         const deletedCart = await CartModel.findByIdAndDelete(cartId);
         return deletedCart;
       } catch (error) {
-        throw new Error(`Error al eliminar el carrito: ${error.message}`);
+        throw new Error;
       }
     }
   
@@ -65,8 +65,7 @@ class CartRepository {
           const result = await this.dao.removeCart(cartId);
           return result;
         } catch (error) {
-          console.error('Error en el repositorio al intentar eliminar el carrito:', error.message);
-          throw new Error('Error en el repositorio al intentar eliminar el carrito');
+          throw new Error;
         }
       }
   }

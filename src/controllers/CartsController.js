@@ -2,6 +2,7 @@
 import { CartService, ProductService } from "../repository/index.js";
 import  {ticketsModel}  from "../dao/db/models/tickets.model.js";
 import { v4 as uuidv4 } from 'uuid';
+import { cartErrorDictionary, customizeError } from "../errors.js";
 
 
 class CartsController {
@@ -13,8 +14,9 @@ class CartsController {
         carts: carts,
       });
     } catch (error) {
-      console.log("Error al obtener carritos:", error);
-      res.status(500).json({ error: "Error interno del servidor" });
+      const formattedError = customizeError('FETCHING_CARTS', error.message, cartErrorDictionary);
+    console.error("Error interno del servidor:", formattedError);
+    res.status(500).json({ error: "Error interno del servidor" });
     }
   };
 
@@ -32,11 +34,9 @@ class CartsController {
         cart: cart,
       });
     } catch (error) {
-      console.error("Error:", error.message);
-      res.status(404).json({
-        status: "error",
-        msg: error.message,
-      });
+      const formattedError = customizeError('CART_NOT_FOUND_BY_ID', error.message, cartErrorDictionary);
+    console.error(formattedError);
+    res.status(500).json({ error: "Error interno del servidor" });
     }
   };
 
@@ -50,8 +50,9 @@ class CartsController {
             cart: cart,
         });
     } catch (error) {
-        console.log("Error al crear el carrito:", error);
-        res.status(500).json({ error: "Error interno del servidor" });
+      const formattedError = customizeError('CREATE_CART', error.message, cartErrorDictionary);
+      console.error(formattedError);
+      res.status(500).json({ error: "Error interno del servidor" });
     }
 };
   static addProductToCart = async (req, res) => {
@@ -69,7 +70,8 @@ class CartsController {
         msg: result
       });
     } catch (error) {
-      console.error("Error al agregar producto al carrito:", error.message);
+      const formattedError = customizeError('ADD_PRODUCT_TO_CART', error.message, cartErrorDictionary);
+      console.error(formattedError);
       res.status(500).json({ error: "Error interno del servidor" });
     }
   };
@@ -117,25 +119,13 @@ class CartsController {
             res.send("el carrito no existe")
         }
     } catch (error) {
-        res.send(error.message)
+      const formattedError = customizeError('FINALIZE_PURCHASE', error.message, cartErrorDictionary);
+      console.error(formattedError);
+      res.status(500).json({ error: "Error interno del servidor" });
     }
   }
 
-  static deleteCart = async (req, res) => {
-    const cid = req.params.cid;
 
-    if (!cid) {
-      return res.status(400).json({ error: "Debe ingresar Id. Cart" });
-    }
-
-    try {
-      const response = await CartService.removeCart(cid);
-      res.status(200).json(response);
-    } catch (error) {
-      console.error("Error al eliminar carrito:", error.message);
-      res.status(500).json({ error: "Error interno del servidor" });
-    }
-  };
 
   static removeProductFromCart = async (req, res) => {
     const cid = req.params.cid;
@@ -149,7 +139,8 @@ class CartsController {
       const response = await CartService.removeProductFromCart(cid, pid);
       res.status(200).json(response);
     } catch (error) {
-      console.error("Error al eliminar producto del carrito:", error.message);
+      const formattedError = customizeError('REMOVE_PRODUCT_FROM_CART', cartErrorDictionary);
+      console.error(formattedError);
       res.status(500).json({ error: "Error interno del servidor" });
     }
   };
@@ -165,7 +156,8 @@ class CartsController {
       const response = await CartService.removeCart(cid);
       res.status(200).json(response);
     } catch (error) {
-      console.error("Error al eliminar carrito:", error.message);
+      const formattedError = customizeError('DELETE_CART', error.message, cartErrorDictionary);
+      console.error(formattedError);
       res.status(500).json({ error: "Error interno del servidor" });
     }
   };

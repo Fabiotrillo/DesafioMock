@@ -1,4 +1,5 @@
 import { ProductService } from "../repository/index.js";
+import { productErrorDictionary, customizeError } from "../errors.js";
 
 class ProductController {
     static getProducts = async (req, res) => {
@@ -18,7 +19,8 @@ class ProductController {
           products: products,
         });
       } catch (error) {
-        console.log("Error en lectura de archivos:", error);
+        const formattedError = customizeError('FETCHING_PRODUCTS', error.message, productErrorDictionary);
+      console.error(formattedError);
         res.status(400).json({ error: "Error en lectura de archivos" });
       }
     };
@@ -37,11 +39,9 @@ class ProductController {
           product: result.msg,
         });
       } catch (error) {
-        console.error("Error:", error.message);
-        res.status(404).json({
-          status: "error",
-          msg: error.message,
-        });
+        const formattedError = customizeError('FETCHING_PRODUCTS', error.message, productErrorDictionary);
+      console.error(formattedError);
+        res.status(400).json({ error: "Error en lectura de archivos" });
       }
     };
   
@@ -76,8 +76,9 @@ class ProductController {
           product: result.msg,
         });
       } catch (error) {
-        console.log("Error en lectura de archivos!!");
-        res.status(500).json({ error: "Error interno del servidor" });
+        const formattedError = customizeError('CREATE_PRODUCT', error.message, productErrorDictionary);
+      console.error(formattedError);
+        res.status(400).json({ error: "Error en lectura de archivos" });
       }
     };
   
@@ -102,11 +103,9 @@ class ProductController {
           product: result.msg,
         });
       } catch (error) {
-        console.error("Error:", error.message);
-        res.status(404).json({
-          status: "error",
-          msg: error.message,
-        });
+        const formattedError = customizeError('UPDATE_PRODUCT', error.message, productErrorDictionary);
+      console.error(formattedError);
+        res.status(400).json({ error: "Error al actualizar archivo" });
       }
     };
   
@@ -126,8 +125,9 @@ class ProductController {
           product: result.msg,
         });
       } catch (error) {
-        console.log("Error en lectura de archivos!!");
-        res.status(500).json({ error: "Error interno del servidor" });
+        const formattedError = customizeError('UPDATE_PRODUCT', error.message, productErrorDictionary);
+      console.error(formattedError);
+        res.status(400).json({ error: "Error al actualizar archivo" });
       }
     };
   }

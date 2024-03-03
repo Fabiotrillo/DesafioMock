@@ -1,5 +1,5 @@
 import { generateProductsList } from "../faker.js";
-import productModel from "../dao/db/models/products.model.js";// Ajusta la ruta según la estructura de tu proyecto
+import productModel from "../dao/db/models/products.model.js";
 
 export const generateMockingProducts = async (req, res) => {
   try {
@@ -19,7 +19,7 @@ export const generateMockingProducts = async (req, res) => {
 
 export const borrarProductosMock = async (req, res) => {
   try {
-    // Borrar todos los productos ficticios
+    
     const resultado = await productModel.deleteMany({});
 
     console.log(`${resultado.deletedCount} productos ficticios borrados exitosamente.`);
