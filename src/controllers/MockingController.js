@@ -1,4 +1,4 @@
-import { generateProductsList } from "../faker.js";
+import { generateProductsList } from "../utils/faker.js";
 import productModel from "../dao/db/models/products.model.js";
 
 export const generateMockingProducts = async (req, res) => {

@@ -1,5 +1,5 @@
 import { ProductService } from "../repository/index.js";
-import { productErrorDictionary, customizeError } from "../errors.js";
+import { productErrorDictionary, customizeError } from "../utils/errors.js";
 
 class ProductController {
     static getProducts = async (req, res) => {

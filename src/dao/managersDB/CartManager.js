@@ -20,10 +20,10 @@ class CartManager {
         return cart;
     }
 
-    async createCarts() {
+    async createCarts(products, quantity ) {
         try {
 
-            const result = await cartModel.create({})
+            const result = await cartModel.create({products, quantity})
             return result;
         } catch (error) {
             console.error('Error al intentar crear el carrito:', error.message);
@@ -31,7 +31,7 @@ class CartManager {
         }
     }
 
-    async addProductToCart(cid, pid, quantity = 1) {
+    async addProductToCart(cid, pid, quantity) {
         try {
             const cart = await cartModel.findById(cid).populate('products.product');
 

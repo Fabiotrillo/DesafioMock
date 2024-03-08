@@ -2,7 +2,7 @@
 import { CartService, ProductService } from "../repository/index.js";
 import  {ticketsModel}  from "../dao/db/models/tickets.model.js";
 import { v4 as uuidv4 } from 'uuid';
-import { cartErrorDictionary, customizeError } from "../errors.js";
+import { cartErrorDictionary, customizeError } from "../utils/errors.js";
 
 
 class CartsController {
@@ -42,7 +42,7 @@ class CartsController {
 
   static createCarts = async (req, res) => {
     try {
-      
+        
         const cart = await CartService.createCarts({});
         res.status(201).json({
             status: "success",
