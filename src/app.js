@@ -15,6 +15,7 @@ import {CartRouter} from './routes/carts.router.js'
 import { UserRouter } from './routes/users.router.js';
 import { mockingRoutes } from './routes/mock.router.js';
 import { addLogger } from './utils/logger.js';
+import { LoggerRouter } from './routes/logger.router.js';
 
 
 
@@ -33,6 +34,7 @@ app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views");
 app.use("/", express.static(__dirname + "/public"));
 app.use(addLogger)
+app.use(LoggerRouter)
 
 app.use(session({
     store: new MongoStore({
